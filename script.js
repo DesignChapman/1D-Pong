@@ -39,7 +39,8 @@ function moveBall(){
         ballSpeedX = -ballSpeedX
         playPongSound();
     }
-    ball.style.left = ballX + "px";
+//    ball.style.left = ballX + "px";
+      ball.style.left = `${ballX/7}%`;
 //    ball.style.top = ballY + "px";
     ball.style.backgroundColor = numtoHexBW(ballY);
 }
@@ -135,46 +136,40 @@ function rgbToHex(r, g, b) {
 }
 
 function playPingSound() {
-    pingSound.currentTime = 0; // Rewind the sound
+    pingSound.currentTime = 0;
+    pingSound.volume = 0.2; 
     pingSound.play();
 }
 
 function playPongSound() {
-    pongSound.currentTime = 0; // Rewind the sound
+    pongSound.currentTime = 0;
+    pongSound.volume = 0.2; 
     pongSound.play();
 }
 
 
-document.addEventListener("keydown",(event) => {
-      if (event.code == 'KeyW' || event.code == 'ArrowUp'){
-        if (paddleY > (paddleSize/2)){
-            paddleY -= 50;
-//            paddle.style.top = paddleY +'px'
-            paddle.style.backgroundColor = numtoHexBW(paddleY);
-            if (gameState =="serve"){gameState ="ready"}
-        }
-      }
-      if (event.code == 'KeyS' || event.code == 'ArrowDown'){
-        if (paddleY < boardHeight-(paddleSize/2)){
-            paddleY += 50;
-//            paddle.style.top = paddleY +'px'
-            paddle.style.backgroundColor = numtoHexBW(paddleY);
-            if (gameState =="serve"){gameState ="ready"}
-        }
-      }
-    },
-    true,
-  );
-  
-  document.addEventListener("mousemove", (event) => {
+
+function handleGameStart(event) {
+    if (gameState == "serve") {
+        gameState = "ready";
+    }
+}
+
+document.addEventListener("mousedown", handleGameStart);
+document.addEventListener("touchstart", handleGameStart);
+
+document.addEventListener("mousemove", (event) => {
     if (event.clientY > (paddleSize / 2) && event.clientY < boardHeight - (paddleSize / 2)) {
         paddleY = event.clientY;
-//        paddle.style.top = paddleY + 'px';
+        // paddle.style.top = paddleY + 'px';
         paddle.style.backgroundColor = numtoHexBW(paddleY);
-        
     }
 });
 
-document.addEventListener("mousedown", (event) =>{
-    if (gameState =="serve"){gameState ="ready"}
+document.addEventListener("touchmove", (event) => {
+    if (event.touches[0].clientY > (paddleSize / 2) && event.touches[0].clientY < boardHeight - (paddleSize / 2)) {
+        paddleY = event.touches[0].clientY;
+        // paddle.style.top = paddleY + 'px';
+        paddle.style.backgroundColor = numtoHexBW(paddleY);
+    }
 });

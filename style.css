@@ -1,7 +1,7 @@
 .board{
     position: relative;
     width: 700px;
-    height: 400px;
+    height: 250px;
     margin: 0 auto;
     background-color: black;
 }
@@ -13,15 +13,32 @@
     height: 100px;
     background-color: #fff;
     left: 10px;
-    top: 200px;
+    top: 150px;
 }
 
 .ball {
     position: absolute;
+    transform: translate(-50%,-50%);
     width: 20px;
     height: 20px;
+    top: 150px;
+    left: 200px;
+    background-color: #000000;
+}
+.divider {
+    position: absolute;
     background-color: #fff;
-    border-radius: 50%;
+    width: 700px;
+    height: 5px;
+}
+#div1 {
+    top: 230px;
+    left: 0px;
+}
+
+#div2 {
+    top: 60px;
+    left: 0px;
 }
 
 .score {
@@ -30,14 +47,26 @@
     color: #fff;
     font-size: 30px;
     left: 20px;
+    font-family: 'Press Start 2P', system-ui;
+}
+
+.highscore {
+    position: absolute;
+    top: 20px;
+    color: #fff;
+    font-size: 30px;
+    right: 20px;
+    font-family: 'Press Start 2P', system-ui;
 }
 
 .message {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%,-50%);
     color: #fff;
-    font-size: 50px;
+    font-size: 35px;
     text-align: center;
+    font-family: 'Press Start 2P', system-ui;
+    display: block;
 }

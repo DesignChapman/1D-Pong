@@ -41,7 +41,7 @@ function moveBall(){
     }
     ball.style.left = ballX + "px";
 //    ball.style.top = ballY + "px";
-    ball.style.backgroundColor = numbertoHexHSV(ballY);
+    ball.style.backgroundColor = numtoHexBW(ballY);
 }
 
 function paddlecheck(){
@@ -51,7 +51,7 @@ function paddlecheck(){
         ballSpeedY = deltaY ;
         ballSpeedY = clamp(-Math.abs(ballSpeedX),ballSpeedY,Math.abs(ballSpeedX))
         ScoreValue++;
-        Score.textContent = "Score:"+ScoreValue;
+        Score.textContent = ScoreValue;
         playPongSound();
     } else {
         gameOver()
@@ -69,7 +69,7 @@ function gameOver(){
         HiScore.textContent = "HI: "+ScoreValue;
     }
     ScoreValue = 0;
-    Score.textContent = "Score:"+ScoreValue;
+    Score.textContent = ScoreValue;
     gameState = "serve";
     Message.style.display = "block";
     ballReset()
@@ -86,7 +86,7 @@ function serve(){
         ballReset();
         gameState = "play";
         Message.style.display = "none";
-        paddle.style.backgroundColor = numbertoHexHSV(paddleY);
+        paddle.style.backgroundColor = numtoHexBW(paddleY);
     }
 }
 
@@ -99,6 +99,7 @@ function numtoHexBW(num){
     if (num < 0 || num > boardHeight) {
         throw new Error("The input number must be between 0 and height.");
     }
+    num = boardHeight - num
     const hexValue = Math.floor((num / boardHeight) * 255).toString(16).padStart(2, "0");
     return `#${hexValue.repeat(3)}`;
 }
@@ -149,7 +150,7 @@ document.addEventListener("keydown",(event) => {
         if (paddleY > (paddleSize/2)){
             paddleY -= 50;
 //            paddle.style.top = paddleY +'px'
-            paddle.style.backgroundColor = numbertoHexHSV(paddleY);
+            paddle.style.backgroundColor = numtoHexBW(paddleY);
             if (gameState =="serve"){gameState ="ready"}
         }
       }
@@ -157,7 +158,7 @@ document.addEventListener("keydown",(event) => {
         if (paddleY < boardHeight-(paddleSize/2)){
             paddleY += 50;
 //            paddle.style.top = paddleY +'px'
-            paddle.style.backgroundColor = numbertoHexHSV(paddleY);
+            paddle.style.backgroundColor = numtoHexBW(paddleY);
             if (gameState =="serve"){gameState ="ready"}
         }
       }
@@ -169,7 +170,7 @@ document.addEventListener("keydown",(event) => {
     if (event.clientY > (paddleSize / 2) && event.clientY < boardHeight - (paddleSize / 2)) {
         paddleY = event.clientY;
 //        paddle.style.top = paddleY + 'px';
-        paddle.style.backgroundColor = numbertoHexHSV(paddleY);
+        paddle.style.backgroundColor = numtoHexBW(paddleY);
         
     }
 });

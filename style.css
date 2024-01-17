@@ -1,0 +1,43 @@
+.board{
+    position: relative;
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: black;
+}
+
+.paddle{
+    position: absolute;
+    transform: translate(0,-50%);
+    width: 20px;
+    height: 100px;
+    background-color: #fff;
+    left: 10px;
+    top: 200px;
+}
+
+.ball {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.score {
+    position: absolute;
+    top: 20px;
+    color: #fff;
+    font-size: 30px;
+    left: 20px;
+}
+
+.message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    font-size: 50px;
+    text-align: center;
+}

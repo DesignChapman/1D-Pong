@@ -7,7 +7,9 @@ const Message = document.querySelector(".message");
 
 let ballX = 50;
 let ballY = 50;
-const ballSpeedStartX = 6;
+let lastTimestamp = 0;
+const targetFPS = 60; // Your desired frame rate
+const ballSpeedStartX = 12;
 let ballSpeedX = ballSpeedStartX;
 let ballSpeedY = 5;
 let paddleY = 250;
@@ -23,10 +25,10 @@ let paddleSize = 100; //give above and bellow
 const pingSound = new Audio('ping.wav');
 const pongSound = new Audio('pong.wav');
 
-function moveBall(){
+function moveBall(deltaTime){
     if(gameState == "serve"){return}
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+    ballX += ballSpeedX * deltaTime;
+    ballY += ballSpeedY * deltaTime;
 
     if (ballX < (boardbuffer*2)){
         paddlecheck();
@@ -47,7 +49,7 @@ function moveBall(){
 
 function paddlecheck(){
     if (ballY > paddleY -paddleSize && ballY < paddleY + paddleSize){
-        ballSpeedX = - (ballSpeedX) + 0.1;
+        ballSpeedX = - (ballSpeedX) + 0.3;
         let deltaY = (ballY - paddleY) * 0.20 
         ballSpeedY = deltaY ;
         ballSpeedY = clamp(-Math.abs(ballSpeedX),ballSpeedY,Math.abs(ballSpeedX))
@@ -91,10 +93,23 @@ function serve(){
     }
 }
 
-setInterval(function(){
+/*setInterval(function(){
     moveBall();
     serve();
-},16);
+},30);*/
+
+function gameLoop(timestamp) {
+    const elapsed = timestamp - lastTimestamp;
+    const frameDuration = 1000 / targetFPS;
+    const deltaTime = elapsed / frameDuration;
+    moveBall(deltaTime);
+    serve();
+
+    lastTimestamp = timestamp;
+    window.requestAnimationFrame(gameLoop);
+}
+
+window.requestAnimationFrame(gameLoop);
 
 function numtoHexBW(num){
     if (num < 0 || num > boardHeight) {
